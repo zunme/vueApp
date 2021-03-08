@@ -12,16 +12,9 @@
     </ion-header>
     
     <ion-content :fullscreen="true">
-      <div class="sliderDerault_wrap">
-       <SliderDefault url='/api/banner/list/type/mobile_main_header' />  
-      </div>
-      
       <div>
         test  
       </div>
-      <div class="sliderDerault_wrap">
-       <SliderDefault url='/api/banner/list/type/mobile_main_footer' />  
-      </div>      
     </ion-content>   
     
   </ion-page>
@@ -29,22 +22,17 @@
 
 <script lang="ts">
 
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons
-       
-       } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons} from '@ionic/vue';
 import { defineComponent } from 'vue';
   
 import LeftMenuIcon from "../components/menu/LeftMenuIcon.vue";
 import RightMenuIcon from "../components/menu/RightMenuIcon.vue";
 import CustomMenuIcon from "../components/menu/CustomMenuIcon.vue";
 
-import SliderDefault from  "../components/SliderDefault.vue";  
   
 export default defineComponent({
-  name: 'home',
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, LeftMenuIcon,RightMenuIcon,CustomMenuIcon,
-              SliderDefault
-              },
+  name: 'sample',
+  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, LeftMenuIcon,RightMenuIcon,CustomMenuIcon },
   setup() {
     return {
     }

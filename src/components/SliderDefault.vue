@@ -1,11 +1,11 @@
 <template>
-  <div v-if="!state.data">
-    NULL
+  <div v-if="!state.isLoaded" class="banners_waiting_wrap">
+    <ion-spinner name="bubbles"></ion-spinner>
   </div>
-  <div v-else>
-    <ion-slides pager="true" :options="slideOpts" scrollbar='true'>
+  <div v-if="state.isLoaded && state.data" class="banners_wrap">
+    <ion-slides pager="true" :options="state.slideOpts" scrollbar='true'>
       <ion-slide v-for="item in state.data" v-bind:key="item.id">
-        <img :src=" state.imgHost + item.img" />
+        <img :src=" state.imgHost + item.image_path" />
       </ion-slide>
     </ion-slides>
   </div>
@@ -13,12 +13,13 @@
 
 
 <script>
-import { IonSlides, IonSlide } from '@ionic/vue';
+import { IonSlides, IonSlide,IonSpinner  } from '@ionic/vue';
 import { defineComponent, reactive } from 'vue';
 //import { coverFlowslideOpts } from './inc/slider.opt'
-  
+import {axiosInstance} from "../services/apiv3.service";
+
 export default defineComponent({
-  components: { IonSlides, IonSlide },
+  components: { IonSlides, IonSlide,IonSpinner  },
   props:{
     url : {
       type: String,
@@ -27,26 +28,6 @@ export default defineComponent({
   },
   setup(props) {
     // Optional parameters to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options.
-    const state = reactive({
-      imgHost : process.env.VUE_APP_API_URL + '/storage/' , 
-      data : null
-    })
-    if(props.url != ''){
-      const res = [
-        {'id':1, 'img':'banner/1609310014_3NNhEhp1.jpg','url':'/expo'},
-        {'id':2, 'img':'banner/1609310014_3NNhEhp1.jpg','url':'/expo'},
-        {'id':3, 'img':'banner/1609310014_3NNhEhp1.jpg','url':'/expo'},
-      ]
-      state.data = res
-    }else {
-const res = [
-        {'id':1, 'img':'banner/1611275157_ZOVmmwAa.jpg','url':'/expo'},
-        {'id':2, 'img':'banner/1611275157_ZOVmmwAa.jpg','url':'/expo'},
-        {'id':3, 'img':'banner/1611275157_ZOVmmwAa.jpg','url':'/expo'},
-      ]
-      state.data = res      
-    }
-    console.log (props.url)
     const slideOpts = {
       //initialSlide: 1,
       slidesPerView: 1.1,
@@ -56,9 +37,34 @@ const res = [
       autoplay : true,
       centeredSlides : true,
     };
+    const state = reactive({
+      imgHost : process.env.VUE_APP_IMG_URL ,
+      isLoaded:false,
+      data : null,
+      slideOpts :slideOpts
+    })
+
+    if(props.url != ''){
+        axiosInstance.get(props.url).then( response=>{
+          const data =  response.data.data
+          if( data.length == 1 ){
+            slideOpts.loop = false;
+            slideOpts.autoplay = false;
+            slideOpts.slidesPerView = 1;
+            state.slideOpts = slideOpts
+            state.data = data
+            state.isLoaded = true            
+          }else if ( data.length > 1){
+            state.data = data
+            state.isLoaded = true            
+          }else state.isLoaded = true;
+
+        })
+    }else {
+      state.isLoaded = true;
+    }
     
-    //const slideOpts = coverFlowslideOpts
-    return { state, slideOpts }
+    return { state }
   }
 });
 </script>

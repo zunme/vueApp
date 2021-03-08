@@ -43,7 +43,7 @@ import RightMenuIcon from "../components/menu/RightMenuIcon.vue";
 import CustomMenuIcon from "../components/menu/CustomMenuIcon.vue";
   
 import axios from 'axios'
-import {securedAxiosInstance, makeErrorToast} from "../services/api.service";
+import {axiosInstance, makeErrorToast} from "../services/apiv3.service";
 import {TokenService} from "../services/token.service";
   
 export default defineComponent({
@@ -68,12 +68,11 @@ export default defineComponent({
 
     function loginWithToken(){
       const url = process.env.VUE_APP_API_URL
-      
       axios.get( url + '/sanctum/csrf-cookie',{}).then(()=>{
-        securedAxiosInstance.post('/api/login',{'email': state.email,'password': state.password}).then(response => {
+        
+        axiosInstance.post('/api/login',{'email': state.email,'password': state.password}).then(response => {
           TokenService.saveToken(response.data.data.token);
-          
-          securedAxiosInstance.get('/api/me').then( response=>{
+          axiosInstance.get('/api/me').then( response=>{
               TokenService.saveData( 'user', response.data )
               router.push(props.nextUrl)
           }).catch( error=>{
@@ -82,10 +81,10 @@ export default defineComponent({
               TokenService.removeData('user')
               makeErrorToast(error)
           })
-          
-        }).catch( error =>{
+        }).catch( error=>{
            makeErrorToast(error)
         })
+        
       })
     }
 

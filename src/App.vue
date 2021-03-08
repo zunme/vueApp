@@ -15,8 +15,8 @@ import { defineComponent,reactive, provide, onMounted  } from 'vue';
 import leftMenu from './components/menu/Left';
 import rightMenu from './components/menu/RightMenu';
 import customMenu from './components/menu/CustomMenu';
-import {securedAxiosInstance} from "./services/api.service";
-import {TokenService} from "./services/token.service";
+
+//import {TokenService} from "./services/token.service";
   
 export default defineComponent({
   components: {
@@ -28,22 +28,6 @@ export default defineComponent({
       logined : false,
     });
     provide('defaultData', defaultData );
-    
-    const loginCheck=()=>{
-      if ( TokenService.getToken() ){
-            securedAxiosInstance.get('/api/me').then( response=>{
-                TokenService.saveData( 'user', response.data )
-                defaultData.logined = true;
-            }).catch( error=>{
-              if (error.response.status == 401 ) {
-                TokenService.removeToken();
-                TokenService.removeData('user')
-              }
-            })
-      }
-    }
-  
-    loginCheck();
     
     const modalState = {
         modal : true,
@@ -97,4 +81,8 @@ export default defineComponent({
 ion-toolbar {
   --ion-toolbar-background : #224275;
 }
+  
+.swiper-slide img{width:100% !important;    max-height: 400px;}
+  
+  
 </style>

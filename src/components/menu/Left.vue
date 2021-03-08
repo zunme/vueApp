@@ -38,7 +38,7 @@ import { defineComponent, reactive } from 'vue';
 import router from "../../router"
   
 import {TokenService} from "../../services/token.service";
-import {securedAxiosInstance,errorToast} from "../../services/api.service";
+import {axiosInstance,errorToast} from "../../services/apiv3.service";
   
 export default defineComponent({
   components: {
@@ -76,7 +76,7 @@ export default defineComponent({
       window.history.pushState( modalState , '', null );      
     }
     const logout=() =>{
-        securedAxiosInstance.post('/api/logout',{}).then(() => {
+        axiosInstance.post('/api/logout',{}).then(() => {
           state.isLogin =false;
           TokenService.removeToken();
           TokenService.removeData('user')
