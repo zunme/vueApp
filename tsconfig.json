@@ -27,6 +27,7 @@
       "scripthost"
     ]
   },
+  "noImplicitAny": false,
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

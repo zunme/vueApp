@@ -4,6 +4,10 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
+import Expos from '../views/Expos.vue'
+import Expo from '../views/Expo.vue'
+import Booth from '../views/Booth.vue'
+
 import UserBoard from '../views/UserBoard.vue'
 
 import Test from '../views/Test.vue'
@@ -49,7 +53,29 @@ const routes: Array<RouteRecordRaw> = [
       meta: {
           guest: true
       }
+  },
+  
+  {
+    path: '/expos',
+    name: 'expos',
+    component: Expos
+  },
+  {
+    path: '/expo/:expocode',
+    name: 'expos',
+    component: Expo
+  }, 
+  {
+    path: '/booth/:expocode/:boothid',
+    name: 'boothWithCode',
+    component: Booth
   },  
+  {
+    path: '/booth/:boothid',
+    name: 'boothWithId',
+    component: Booth
+  },
+  
   {
       path: '/:pathMatch(.*)*',
       //redirect: "/404"

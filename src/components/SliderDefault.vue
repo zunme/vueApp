@@ -3,6 +3,12 @@
     <ion-spinner name="bubbles"></ion-spinner>
   </div>
   <div v-if="state.isLoaded && state.data" class="banners_wrap">
+    <slot name="header">
+      <div class="banners_title_wrap" v-if="title">
+        <router-link :to="linked" v-if="linked" class="banners_title_link">{{title}}</router-link>
+        <div class="banners_title" v-else>{{title}}</div>
+      </div>
+    </slot>
     <ion-slides pager="true" :options="state.slideOpts" scrollbar='true'>
       <ion-slide v-for="item in state.data" v-bind:key="item.id">
         <img :src=" state.imgHost + item.image_path" />
@@ -24,6 +30,14 @@ export default defineComponent({
     url : {
       type: String,
       default :''
+    },
+    title : {
+      type: String,
+      default :''
+    },
+    linked : {
+      type:String,
+      default:''
     }
   },
   setup(props) {

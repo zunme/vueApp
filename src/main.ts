@@ -39,7 +39,11 @@ router.isReady().then(() => {
     console.log ( response.data )
     app.mount('#app')
   }).catch( error=>{
-    app.mount('#app')
+    if( !error.response){
+      console.log (error)
+    }else{
+    app.mount('#app')      
+    }
     console.log (error)
   })
 });
