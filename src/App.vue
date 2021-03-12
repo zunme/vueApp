@@ -93,7 +93,6 @@ export default defineComponent({
               }
             })
           defaultData.live = lives
-          console.log ( lives)
         }else {
           defaultData.live = []
         }
@@ -102,7 +101,6 @@ export default defineComponent({
     }
     let intval
     onMounted( ()=>{
-      //console.log ( `Bearer ${TokenService.getToken()}` )
         fnBoothLiveCheck();
         intval = setInterval(async function () {
           fnBoothLiveCheck();
@@ -141,7 +139,13 @@ ion-toolbar {
   overflow: hidden;
   text-overflow: ellipsis;
 }
- 
+  
+.object-fit_fill { object-fit: fill }
+.object-fit_contain { object-fit: contain }
+.object-fit_cover { object-fit: cover }
+.object-fit_none { object-fit: none }
+.object-fit_scale-down { object-fit: scale-down }
+  
 .swiper-slide img{width:100% !important;    max-height: 400px;}
 
   .bgbox{

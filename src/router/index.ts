@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
-import Expos from '../views/Expos.vue'
+import ExpoHome from '../views/ExpoHome.vue'
 import Expo from '../views/Expo.vue'
 import Booth from '../views/Booth.vue'
 
@@ -57,8 +57,8 @@ const routes: Array<RouteRecordRaw> = [
   
   {
     path: '/expos',
-    name: 'expos',
-    component: Expos
+    name: 'expohome',
+    component: ExpoHome
   },
   {
     path: '/expo/:expocode',

@@ -103,7 +103,16 @@
       
       
       <div>
-        HOME ....  
+        <div>
+          HOME ....    
+        </div>
+        
+        <div>
+          time2 : {{ time2 }}
+        </div>
+        
+    <button @click="startinterval">start</button>
+    <button @click="stopinterval">stop</button>
       </div>
 
 
@@ -127,9 +136,9 @@
 <script lang="ts">
 
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons
-       
        } from '@ionic/vue';
-import { defineComponent,reactive,inject } from 'vue';
+import { defineComponent,reactive,inject, computed } from 'vue';
+import { useStore } from "vuex";  
   
 import LeftMenuIcon from "../components/menu/LeftMenuIcon.vue";
 import RightMenuIcon from "../components/menu/RightMenuIcon.vue";
@@ -146,6 +155,12 @@ export default defineComponent({
               SliderDefault,TitleBox
               },
   setup() {
+    const store = useStore();
+    
+    const time2 = computed(() => store.getters.getItems);
+    const startinterval = () => store.dispatch('setInterval','start');
+    const stopinterval = () => store.dispatch('setInterval','stop');
+    store.dispatch('setItems');
     const state = reactive({
       hostUrl : process.env.VUE_APP_API_URL ,
       imgHost : process.env.VUE_APP_IMG_URL ,
@@ -162,13 +177,10 @@ export default defineComponent({
       state.expos = data.expos
       state.recrutings = data.recruting
     });
-    /*
-    onMounted( ()=>{
-       
-    })
-    */
+    
     return {
-      state
+      state,
+      startinterval, stopinterval, time2
     }
   },
 });
